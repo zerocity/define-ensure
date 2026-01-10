@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-import-prefix
 import { build, emptyDir } from "jsr:@deno/dnt@^0.42.3";
 
 // Read version from deno.json
