@@ -248,3 +248,4 @@ Inspired by [tiny-invariant](https://github.com/alexreardon/tiny-invariant) by A
 ## License
 
 MIT
+
