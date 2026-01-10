@@ -1,17 +1,20 @@
 name: Publish
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       release_type:
-        description: "Release type"
-        required: true
+        description: "Release type (ignored on auto-release)"
+        required: false
         type: choice
         options:
+          - ""
           - patch
           - minor
           - major
-        default: patch
+        default: ""
       first_release:
         description: "First release (no version bump)"
         required: false
@@ -21,6 +24,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release)') }}
     permissions:
       contents: write
       id-token: write
@@ -40,8 +44,10 @@ jobs:
         run: |
           if [ "${{ inputs.first_release }}" = "true" ]; then
             commit-and-tag-version --first-release
-          else
+          elif [ -n "${{ inputs.release_type }}" ]; then
             commit-and-tag-version --release-as ${{ inputs.release_type }}
+          else
+            commit-and-tag-version
           fi
 
       - name: Push changes
