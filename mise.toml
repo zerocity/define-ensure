@@ -3,6 +3,7 @@ deno = "2"
 node = "22"
 "npm:husky" = "9"
 "npm:@commitlint/cli" = "20"
+"npm:commit-and-tag-version" = "12"
 "npm:@mariozechner/pi-coding-agent" = "latest"
 
 [env]
@@ -16,3 +17,5 @@ fmt = "deno fmt"
 dev = "deno run --watch main.ts"
 ci = ["deno check src/mod.ts", "deno lint", "deno test"]
 setup = "husky"
+release = "commit-and-tag-version"
+"release:first" = "commit-and-tag-version --first-release"

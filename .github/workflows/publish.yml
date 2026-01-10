@@ -3,10 +3,20 @@ name: Publish
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version to release (e.g. 0.2.0)"
+      release_type:
+        description: "Release type"
         required: true
-        type: string
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      first_release:
+        description: "First release (no version bump)"
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   publish:
@@ -21,33 +31,28 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - name: Update version
-        run: |
-          deno eval "
-            const config = JSON.parse(Deno.readTextFileSync('deno.json'));
-            config.version = '${{ inputs.version }}';
-            Deno.writeTextFileSync('deno.json', JSON.stringify(config, null, 2) + '\n');
-          "
-
-      - name: Commit and tag
+      - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add deno.json
-          git commit -m "release: v${{ inputs.version }}"
-          git tag "v${{ inputs.version }}"
-          git push origin main --tags
 
-      - run: deno publish
+      - name: Create release
+        run: |
+          if [ "${{ inputs.first_release }}" = "true" ]; then
+            commit-and-tag-version --first-release
+          else
+            commit-and-tag-version --release-as ${{ inputs.release_type }}
+          fi
 
-      - name: Generate changelog
-        id: changelog
-        uses: requarks/changelog-action@v1
-        with:
-          token: ${{ github.token }}
-          tag: "v${{ inputs.version }}"
+      - name: Push changes
+        run: git push origin main --follow-tags
+
+      - name: Publish to JSR
+        run: deno publish
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "v${{ inputs.version }}" --notes "${{ steps.changelog.outputs.changes }}"
+        run: |
+          VERSION=$(jq -r .version deno.json)
+          gh release create "v${VERSION}" --generate-notes

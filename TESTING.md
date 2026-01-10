@@ -65,3 +65,27 @@ mise run ci
 ```
 
 Runs: `deno check`, `deno lint`, `deno test`
+
+## Release (local dry-run)
+
+```bash
+mise run release -- --dry-run
+```
+
+**Expected output:**
+```
+✔ bumping version in deno.json from 0.1.0 to 0.1.1
+✔ created CHANGELOG.md
+✔ outputting changes to CHANGELOG.md
+...
+✔ committing deno.json and CHANGELOG.md
+✔ tagging release v0.1.1
+```
+
+### Release types
+
+```bash
+mise run release -- --release-as patch --dry-run  # 0.1.0 -> 0.1.1
+mise run release -- --release-as minor --dry-run  # 0.1.0 -> 0.2.0
+mise run release -- --release-as major --dry-run  # 0.1.0 -> 1.0.0
+```
