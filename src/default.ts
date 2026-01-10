@@ -1,4 +1,5 @@
 import { defineEnsure } from "./factory.ts";
+import type { EnsureFn, IsErrorFn } from "./types.ts";
 
 /**
  * Default error class for ensure
@@ -19,7 +20,13 @@ export class EnsureError extends Error {
 /**
  * Default ensure validator using EnsureError
  */
-export const [ensure, isEnsureError] = defineEnsure<EnsureError>({
+const _default: [EnsureFn, IsErrorFn<EnsureError>] = defineEnsure<EnsureError>({
   error: EnsureError,
   name: "ensure",
 });
+
+/** Ensure a value is not null, undefined, or false */
+export const ensure: EnsureFn = _default[0];
+
+/** Type guard for EnsureError */
+export const isEnsureError: IsErrorFn<EnsureError> = _default[1];
