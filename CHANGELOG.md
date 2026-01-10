@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.5](https://github.com/zerocity/define-ensure/compare/v0.1.4...v0.1.5) (2026-01-10)
+
+
+### Bug Fixes
+
+* cleanup repo ([80a31bc](https://github.com/zerocity/define-ensure/commit/80a31bc3955567008e28e1c822b34a24aa79818c))
+
 ## [0.1.4](https://github.com/zerocity/define-ensure/compare/v0.1.3...v0.1.4) (2026-01-10)
 
 
