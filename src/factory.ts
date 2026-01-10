@@ -11,15 +11,40 @@ import type {
 
 /**
  * Check if running in production mode.
- * Uses Deno.env for environment detection.
+ * Supports Deno, Node.js, and bundlers (Vite/esbuild/webpack).
  */
 function isProduction(): boolean {
+  // Deno
   try {
-    return Deno.env.get("DENO_ENV") === "production";
+    if (typeof Deno !== "undefined") {
+      return Deno.env.get("DENO_ENV") === "production";
+    }
   } catch {
-    // Permission denied or not available
-    return false;
+    // Permission denied
   }
+
+  // Node.js
+  try {
+    // deno-lint-ignore no-process-global
+    if (typeof process !== "undefined" && process.env) {
+      // deno-lint-ignore no-process-global
+      return process.env.NODE_ENV === "production";
+    }
+  } catch {
+    // Not available
+  }
+
+  // Bundlers (Vite, esbuild, etc.) - import.meta.env is typically inlined at build time
+  try {
+    // @ts-ignore - import.meta.env is non-standard but widely supported by bundlers
+    if (typeof import.meta.env !== "undefined" && import.meta.env.PROD) {
+      return true;
+    }
+  } catch {
+    // Not available
+  }
+
+  return false;
 }
 
 /**
@@ -45,7 +70,42 @@ function parseArg(arg: EnsureArg): {
 }
 
 /**
- * Create an ensure validator with custom configuration
+ * Create an ensure validator with custom configuration.
+ *
+ * @example Basic custom validator
+ * ```typescript
+ * import { defineEnsure } from "@zerocity/define-ensure";
+ *
+ * class ValidationError extends Error {
+ *   override name = "ValidationError";
+ * }
+ *
+ * const [validate, isValidationError] = defineEnsure({
+ *   error: ValidationError,
+ * });
+ *
+ * const email = validate(formData.email, "Email required");
+ * ```
+ *
+ * @example With message formatting
+ * ```typescript
+ * const [validate] = defineEnsure({
+ *   error: ValidationError,
+ *   formatMessage: (msg) => `Validation failed: ${msg}`,
+ * });
+ *
+ * validate(null, "Email required");
+ * // Throws: "Validation failed: Email required"
+ * ```
+ *
+ * @example Strip messages in production (tiny-invariant style)
+ * ```typescript
+ * const [assert] = defineEnsure({
+ *   error: AssertionError,
+ *   name: "Assertion failed",
+ *   strip: true, // Messages stripped when DENO_ENV=production
+ * });
+ * ```
  */
 export function defineEnsure<E extends Error>(
   config: DefineEnsureConfig

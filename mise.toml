@@ -1,5 +1,5 @@
 [tools]
-deno = "latest"
+deno = "v2.6.4"
 "npm:@mariozechner/pi-coding-agent" = "latest"
 
 [env]
