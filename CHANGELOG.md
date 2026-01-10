@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.6](https://github.com/zerocity/define-ensure/compare/v0.1.5...v0.1.6) (2026-01-10)
+
+
+### Features
+
+* add npm publishing support ([3e06d6c](https://github.com/zerocity/define-ensure/commit/3e06d6c1662efbb640816a195f312b7baa721c95))
+
+
+### Bug Fixes
+
+* disable lint rule for jsr import ([8e5e082](https://github.com/zerocity/define-ensure/commit/8e5e082537e4118039f693729d71b315c3eed708))
+
 ## [0.1.5](https://github.com/zerocity/define-ensure/compare/v0.1.4...v0.1.5) (2026-01-10)
 
 
