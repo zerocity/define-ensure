@@ -55,4 +55,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=$(jq -r .version deno.json)
-          gh release create "v${VERSION}" --generate-notes
+          # Extract latest version's changelog (between first two ## headings)
+          NOTES=$(awk '/^## \[?[0-9]/{if(p) exit; p=1; next} p' CHANGELOG.md)
+          gh release create "v${VERSION}" --notes "$NOTES"
