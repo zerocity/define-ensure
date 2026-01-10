@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.1](https://github.com/zerocity/define-ensure/compare/v0.1.0...v0.1.1) (2026-01-10)
+
+
+### Bug Fixes
+
+* test ci workflow ([b8947da](https://github.com/zerocity/define-ensure/commit/b8947da6471d27a1acaa05a8929aa16ffbceed87))
+
 ## 0.1.0 (2026-01-10)
 
 
