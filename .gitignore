@@ -2,3 +2,5 @@ node_modules
 .vscode
 .pi
 npm/
+coverage/
+coverage.lcov
