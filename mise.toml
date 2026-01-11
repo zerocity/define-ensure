@@ -11,11 +11,16 @@ EDITOR = "code"
 
 [tasks]
 test = "deno test"
+"test:coverage" = "deno test --coverage=coverage && deno coverage coverage --lcov > coverage.lcov"
 check = "deno check src/mod.ts"
 lint = "deno lint"
 fmt = "deno fmt"
 dev = "deno run --watch main.ts"
-ci = ["deno check src/mod.ts", "deno lint", "deno test"]
+ci = ["deno check src/mod.ts", "deno lint", "deno test --coverage=coverage"]
 setup = "husky"
 release = "commit-and-tag-version"
 "release:first" = "commit-and-tag-version --first-release"
+"release:minor" = "commit-and-tag-version --release-as minor"
+"release:major" = "commit-and-tag-version --release-as major"
+publish = "deno publish"
+"publish:dry" = "deno publish --dry-run"

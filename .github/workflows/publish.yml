@@ -24,6 +24,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Skip release commits to prevent infinite loop
     if: ${{ !startsWith(github.event.head_commit.message, 'chore(release)') }}
     permissions:
       contents: write
@@ -34,13 +35,21 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/deno
+            ~/.deno
+          key: deno-${{ runner.os }}-${{ hashFiles('deno.lock') }}
+          restore-keys: deno-${{ runner.os }}-
+
       - uses: jdx/mise-action@v2
 
-      - name: Setup Node.js for npm publish
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          registry-url: "https://registry.npmjs.org"
+      - name: Verify build
+        run: mise run ci
+
+      - name: Publish to JSR (dry run)
+        run: mise run publish:dry
 
       - name: Configure git
         run: |
@@ -50,11 +59,11 @@ jobs:
       - name: Create release
         run: |
           if [ "${{ inputs.first_release }}" = "true" ]; then
-            commit-and-tag-version --first-release
+            mise run release:first
           elif [ -n "${{ inputs.release_type }}" ]; then
-            commit-and-tag-version --release-as ${{ inputs.release_type }}
+            mise run release:${{ inputs.release_type }}
           else
-            commit-and-tag-version
+            mise run release
           fi
 
       - name: Check build
@@ -64,7 +73,7 @@ jobs:
         run: git push origin main --follow-tags
 
       - name: Publish to JSR
-        run: deno publish
+        run: mise run publish
 
       - name: Build and publish to npm
         env:
