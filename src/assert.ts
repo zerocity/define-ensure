@@ -105,6 +105,9 @@ function isProduction(): boolean {
 /**
  * Assert a condition is truthy (tiny-invariant style with inline configuration).
  * Uses TypeScript's `asserts` to narrow types based on the condition.
+ * 
+ * Note: Uses `any` for condition parameter to match tiny-invariant's behavior
+ * and allow any value to be asserted.
  *
  * @example Simple assertion (tiny-invariant style)
  * ```typescript
@@ -167,6 +170,7 @@ function isProduction(): boolean {
  * assertValid(password.length > 8, "Password too short");
  * ```
  */
+// deno-lint-ignore no-explicit-any
 export function assert(condition: any, arg: AssertArg): asserts condition {
   if (!condition) {
     // Parse options

@@ -277,6 +277,7 @@ describe("Creating reusable wrappers", () => {
       override name = "ValidationError";
     }
 
+    // deno-lint-ignore no-explicit-any
     function assertValid(condition: any, message: string): asserts condition {
       assert(condition, {
         message,
