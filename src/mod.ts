@@ -31,6 +31,15 @@
 // Default ensure (zero-config)
 export { ensure, EnsureError, isEnsureError } from "./default.ts";
 
+// Assert function (tiny-invariant style with inline config)
+export {
+  assert,
+  AssertError,
+  isAssertError,
+  type AssertArg,
+  type AssertOptions,
+} from "./assert.ts";
+
 // Factory for custom validators
 export { defineEnsure } from "./factory.ts";
 
