@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.8](https://github.com/zerocity/define-ensure/compare/v0.1.7...v0.1.8) (2026-01-11)
+
+
+### Bug Fixes
+
+* fix npm publish auth and remove duplicate build check ([e84eb62](https://github.com/zerocity/define-ensure/commit/e84eb622e620e82a55375ba28462f36d404de429))
+
 ## [0.1.7](https://github.com/zerocity/define-ensure/compare/v0.1.6...v0.1.7) (2026-01-11)
 
 
