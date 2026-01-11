@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.7](https://github.com/zerocity/define-ensure/compare/v0.1.6...v0.1.7) (2026-01-11)
+
+
+### Features
+
+* add mise tasks for release and publish ([862c68f](https://github.com/zerocity/define-ensure/commit/862c68f3279d7d2cff6bc60229bf8b778e1ccbfc))
+
 ## [0.1.6](https://github.com/zerocity/define-ensure/compare/v0.1.5...v0.1.6) (2026-01-10)
 
 
