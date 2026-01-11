@@ -1,7 +1,7 @@
 {
   "name": "@zerocity/define-ensure",
   "description": "Type-safe runtime assertions with definable error factories and TypeScript narrowing",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "publish": {
