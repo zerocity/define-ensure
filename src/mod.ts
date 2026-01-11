@@ -25,22 +25,11 @@
  * const email = validate(formData.email, "Email required");
  * ```
  *
- * @example Drop-in replacement for tiny-invariant
- * ```typescript
- * import { invariant } from "@zerocity/define-ensure";
- *
- * // Same as tiny-invariant, but returns the value!
- * const user = invariant(maybeUser, "User required");
- * ```
- *
  * @module
  */
 
 // Default ensure (zero-config)
 export { ensure, EnsureError, isEnsureError } from "./default.ts";
-
-// tiny-invariant compatible (strips messages in production)
-export { invariant, InvariantError, isInvariantError } from "./invariant.ts";
 
 // Factory for custom validators
 export { defineEnsure } from "./factory.ts";
