@@ -20,6 +20,7 @@ ci = ["deno check src/mod.ts", "deno lint", "deno test --coverage=coverage"]
 setup = "husky"
 release = "commit-and-tag-version"
 "release:first" = "commit-and-tag-version --first-release"
+"release:patch" = "commit-and-tag-version --release-as patch"
 "release:minor" = "commit-and-tag-version --release-as minor"
 "release:major" = "commit-and-tag-version --release-as major"
 publish = "deno publish"
