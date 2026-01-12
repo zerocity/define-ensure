@@ -96,6 +96,15 @@ export interface DefineEnsureConfig {
   formatMessage?: (message: string) => string;
   /** Strip messages in production by default (tiny-invariant behavior) */
   strip?: boolean;
+  /**
+   * Remove internal library frames from stack traces.
+   * 
+   * Note: Only works in V8 engines (Chrome, Edge, Node.js, Deno).
+   * Silently ignored in Firefox and Safari.
+   * 
+   * @default false
+   */
+  cleanStack?: boolean;
 }
 
 /**
