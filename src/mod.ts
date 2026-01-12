@@ -43,6 +43,9 @@ export {
 // Factory for custom validators
 export { defineEnsure } from "./factory.ts";
 
+// Utilities
+export { supportsCleanStack } from "./utils.ts";
+
 // Types
 export type {
   DefineEnsureConfig,

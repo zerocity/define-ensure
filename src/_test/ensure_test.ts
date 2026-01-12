@@ -173,6 +173,39 @@ describe("defineEnsure", () => {
 
     expect(() => validate(null, "Sensitive info")).toThrow("Sensitive info");
   });
+
+  it("cleanStack removes internal library frames from stack trace", () => {
+    const [validate] = defineEnsure({
+      error: ValidationError,
+      cleanStack: true,
+    });
+
+    try {
+      validate(null, "Test error");
+    } catch (e) {
+      const stack = (e as Error).stack ?? "";
+      // Should NOT contain internal factory.ts frames
+      expect(stack).not.toContain("at fail");
+      expect(stack).not.toContain("at ensure");
+      // Should still have a stack trace
+      expect(stack).toContain("ValidationError");
+    }
+  });
+
+  it("cleanStack works with ensure.instance", () => {
+    const [validate] = defineEnsure({
+      error: ValidationError,
+      cleanStack: true,
+    });
+
+    try {
+      validate.instance("not a date", Date, "Expected Date");
+    } catch (e) {
+      const stack = (e as Error).stack ?? "";
+      expect(stack).not.toContain("at fail");
+      expect(stack).not.toContain("at instance");
+    }
+  });
 });
 
 // ============================================================================

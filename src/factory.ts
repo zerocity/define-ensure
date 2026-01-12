@@ -115,12 +115,14 @@ export function defineEnsure<E extends Error>(
     name,
     formatMessage,
     strip: defaultStrip = false,
+    cleanStack = false,
   } = config;
 
   /**
    * Create and throw the error
    */
-  function fail(arg: EnsureArg): never {
+  // deno-lint-ignore ban-types
+  function fail(arg: EnsureArg, caller?: Function): never {
     const { message, error: ErrorClass, cause, strip } = parseArg(arg);
 
     const shouldStrip = strip ?? defaultStrip;
@@ -136,7 +138,14 @@ export function defineEnsure<E extends Error>(
     }
 
     const Ctor = ErrorClass ?? DefaultError;
-    throw new Ctor(finalMessage, cause ? { cause } : undefined);
+    const error = new Ctor(finalMessage, cause ? { cause } : undefined);
+
+    // Remove internal library frames from stack trace (V8 engines only)
+    if (cleanStack && caller && Error.captureStackTrace) {
+      Error.captureStackTrace(error, caller);
+    }
+
+    throw error;
   }
 
   /**
@@ -147,7 +156,7 @@ export function defineEnsure<E extends Error>(
     arg: EnsureArg
   ): Exclude<T, null | undefined | false> {
     if (value === null || value === undefined || value === false) {
-      fail(arg);
+      fail(arg, ensure);
     }
     return value as Exclude<T, null | undefined | false>;
   }
@@ -155,14 +164,13 @@ export function defineEnsure<E extends Error>(
   /**
    * Ensure value is instance of a class
    */
-
   function instance<T, C extends Constructor>(
     value: T,
     constructor: C,
     arg: EnsureArg
   ): InstanceType<C> {
     if (!(value instanceof constructor)) {
-      fail(arg);
+      fail(arg, instance);
     }
     return value as InstanceType<C>;
   }

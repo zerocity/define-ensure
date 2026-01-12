@@ -53,7 +53,14 @@ export interface AssertOptions {
   cause?: unknown;
   /** Transform message before passing to Error */
   formatMessage?: (message: string) => string;
-  /** Remove internal library frames from stack traces (V8 engines only) */
+  /**
+   * Remove internal library frames from stack traces.
+   * 
+   * Note: Only works in V8 engines (Chrome, Edge, Node.js, Deno).
+   * Silently ignored in Firefox and Safari.
+   * 
+   * @default false
+   */
   cleanStack?: boolean;
   /** Strip messages in production (tiny-invariant behavior) */
   strip?: boolean;
