@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://github.com/zerocity/define-ensure/compare/v0.1.10...v0.2.0) (2026-01-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Removed invariant, InvariantError, and isInvariantError
+
+The invariant function was not a drop-in replacement for tiny-invariant
+as it did not use asserts signature and returned a value instead of void
+
+Migration: Use ensure() instead and capture the returned narrowed value
+See BREAKING_CHANGES.md for details
+
+### Features
+
+* add assert function with inline configuration ([9e715bb](https://github.com/zerocity/define-ensure/commit/9e715bba14ceb3b7d521e238cfd26e3cfaf6736e))
+* add cleanStack support with browser detection ([a7124b4](https://github.com/zerocity/define-ensure/commit/a7124b4e622c76af91ac1eba5aecd36d217c09ab))
+* remove invariant exports ([f9a23cf](https://github.com/zerocity/define-ensure/commit/f9a23cfbca9fe94fb5cccb1c039f16ee81829c4d))
+
 ## [0.1.10](https://github.com/zerocity/define-ensure/compare/v0.1.9...v0.1.10) (2026-01-11)
 
 ## [0.1.9](https://github.com/zerocity/define-ensure/compare/v0.1.8...v0.1.9) (2026-01-11)
